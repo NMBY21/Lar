@@ -1,18 +1,48 @@
-<script setup lang="ts">
-import AppLayout from '@/layouts/app/AppSidebarLayout.vue';
-import type { BreadcrumbItemType } from '@/types';
-
-interface Props {
-    breadcrumbs?: BreadcrumbItemType[];
-}
-
-withDefaults(defineProps<Props>(), {
-    breadcrumbs: () => [],
-});
-</script>
-
 <template>
-    <AppLayout :breadcrumbs="breadcrumbs">
-        <slot />
-    </AppLayout>
+    <div class="flex min-h-screen bg-gray-100">
+        <!-- Sidebar -->
+        <aside class="w-64 bg-white shadow-lg p-8">
+            <nav class="space-y-2">
+                <NavLink href="/dashboard" label="Dashboard" />
+
+                <p class="text-sm font-semibold mt-4">Orders</p>
+                <NavLink href="/orders" label="Orders" />
+                <NavLink href="/expenses" label="Expense" />
+
+                <p class="text-sm font-semibold mt-4">Report</p>
+                <NavLink href="/report" label="Report" />
+
+                <p class="text-sm font-semibold mt-4">Setting</p>
+                <NavLink href="/settings/expense-type" label="Expense Type" />
+                <NavLink href="/settings/vehicles" label="Vehicles" />
+                <NavLink href="/settings/employees" label="Employees" />
+                <NavLink href="/settings/location" label="Location" />
+                <NavLink href="/settings/load-type" label="Load Type" />
+                <NavLink href="/settings/bank" label="Bank" />
+
+                <p class="text-sm font-semibold mt-4">User Management</p>
+                <NavLink href="/clients" label="Clients" />
+                <NavLink href="/system-users" label="System Users" />
+                <NavLink href="/roles" label="Roles & Permissions" />
+            </nav>
+        </aside>
+
+        <!-- Main Section: Top Navbar + Content -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+            <!-- Top Navbar -->
+            <UserNavbar />
+
+            <!-- Page Content -->
+            <main class="flex-1 overflow-y-auto p-6">
+                <slot />
+            </main>
+        </div>
+    </div>
 </template>
+
+<script setup>
+import NavLink from '@/Components/NavLink.vue'
+import UserNavbar from '@/Components/UserNavbar.vue'
+
+
+</script>

@@ -1,4 +1,106 @@
 <script setup lang="ts">
+import { Head, Link, useForm, usePage } from '@inertiajs/vue3'
+
+import DeleteUser from '@/components/DeleteUser.vue'
+import HeadingSmall from '@/components/HeadingSmall.vue'
+import InputError from '@/components/InputError.vue'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import AppLayout from '@/layouts/AppLayout.vue'
+import SettingsLayout from '@/layouts/settings/Layout.vue'
+import { type BreadcrumbItem, type SharedData, type User } from '@/types'
+
+interface Props {
+    mustVerifyEmail: boolean
+    status?: string
+}
+
+defineProps<Props>()
+
+const breadcrumbs: BreadcrumbItem[] = [
+    {
+        title: 'Profile Settings',
+        href: '/settings/profile',
+    },
+]
+
+const page = usePage<SharedData>()
+const user = page.props.auth.user as User
+
+const form = useForm({
+    name: user.name,
+    email: user.email,
+})
+
+const submit = () => {
+    form.patch(route('profile.update'), {
+        preserveScroll: true,
+    })
+}
+</script>
+
+<template>
+    <AppLayout :breadcrumbs="breadcrumbs">
+
+        <Head title="Profile Settings" />
+
+        <SettingsLayout>
+            <div class="space-y-10">
+                <!-- Profile Info Section -->
+                <div class="space-y-6">
+                    <HeadingSmall title="Profile Information" description="Update your name and email address" />
+
+                    <form @submit.prevent="submit" class="space-y-6 max-w-xl">
+                        <!-- Name Field -->
+                        <div class="grid gap-2">
+                            <Label for="name">Name</Label>
+                            <Input id="name" v-model="form.name" required placeholder="Full name" />
+                            <InputError :message="form.errors.name" />
+                        </div>
+
+                        <!-- Email Field -->
+                        <div class="grid gap-2">
+                            <Label for="email">Email Address</Label>
+                            <Input id="email" v-model="form.email" type="email" required placeholder="Email address" />
+                            <InputError :message="form.errors.email" />
+                        </div>
+
+                        <!-- Email Verification Notice -->
+                        <div v-if="mustVerifyEmail && !user.email_verified_at" class="text-sm text-muted-foreground">
+                            Your email address is unverified.
+                            <Link :href="route('verification.send')" method="post" as="button"
+                                class="text-foreground underline decoration-neutral-300 underline-offset-4 transition-colors hover:decoration-current">
+                            Click here to resend the verification email.
+                            </Link>
+
+                            <div v-if="status === 'verification-link-sent'"
+                                class="mt-2 text-sm font-medium text-green-600">
+                                A new verification link has been sent to your email address.
+                            </div>
+                        </div>
+
+                        <!-- Save Button -->
+                        <div class="flex items-center gap-4">
+                            <Button :disabled="form.processing">Save</Button>
+                            <Transition enter-active-class="transition-opacity duration-300"
+                                enter-from-class="opacity-0" leave-active-class="transition-opacity duration-300"
+                                leave-to-class="opacity-0">
+                                <p v-show="form.recentlySuccessful" class="text-sm text-muted-foreground">Saved.</p>
+                            </Transition>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Delete User Section -->
+                <DeleteUser />
+            </div>
+        </SettingsLayout>
+    </AppLayout>
+</template>
+
+
+<!-- <script setup lang="ts">
 import { Head, Link, useForm, usePage } from '@inertiajs/vue3';
 
 import DeleteUser from '@/components/DeleteUser.vue';
@@ -105,4 +207,4 @@ const submit = () => {
             <DeleteUser />
         </SettingsLayout>
     </AppLayout>
-</template>
+</template> -->

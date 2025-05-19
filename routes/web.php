@@ -13,6 +13,11 @@ Route::get('dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::post('/logout', function () {
+    Auth::logout();
+    return redirect('/');
+});
+
 // products
 Route::middleware(['auth'])->group(function () {
     Route::get('/admin/products', [ProductController::class, 'index'])->name('products.index');
@@ -23,5 +28,6 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/admin/products/{product}', [ProductController::class, 'update'])->name('products.update');
     Route::delete('/admin/products/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
 });
+
 require __DIR__.'/settings.php';
 require __DIR__.'/auth.php';
