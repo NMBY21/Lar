@@ -1,6 +1,6 @@
 <template>
-    <div class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
-        <div class="bg-white rounded-lg shadow p-6 w-full max-w-md">
+    <div class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center">
+        <div class="bg-white rounded-xl shadow-lg w-full max-w-lg p-6 relative">
             <h2 class="text-lg font-semibold mb-4">
                 {{ client ? 'Edit Client' : 'Add Client' }}
             </h2>

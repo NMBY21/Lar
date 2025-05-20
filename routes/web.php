@@ -43,10 +43,12 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
 Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
     Route::get('roles', [RoleController::class, 'index'])->name('admin.roles.index');
     Route::post('roles', [RoleController::class, 'store'])->name('admin.roles.store');
-    Route::delete('roles/{role}', [RoleController::class, 'destroy'])->name('admin.roles.destroy');
+    // Route::delete('roles/{role}', [RoleController::class, 'destroy'])->name('admin.roles.destroy');
     Route::post('roles/{role}/permissions', [RoleController::class, 'assignPermissions'])->name('admin.roles.permissions');
     Route::put('roles/{role}', [RoleController::class, 'update'])->name('admin.roles.update');
-    Route::delete('roles/{role}', [RoleController::class, 'destroy'])->name('admin.roles.destroy');
+    Route::delete('roles/{role}action: ', [RoleController::class, 'destroy'])->name('admin.roles.destroy');
+    Route::delete('/admin/roles/{role}', [RoleController::class, 'destroy'])->name('admin.roles.destroy');
+    // Route::delete('/admin/system-users/{user}', [SystemUserController::class, 'destroy'])->name('admin.system-users.destroy');
 
 });
 // permission

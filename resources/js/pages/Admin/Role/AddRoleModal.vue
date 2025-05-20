@@ -1,6 +1,6 @@
 <template>
-    <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-        <div class="bg-white rounded-xl w-full max-w-md p-6 shadow-lg">
+    <div class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center">
+        <div class="bg-white rounded-xl shadow-lg w-full max-w-lg p-6 relative">
             <h2 class="text-xl font-bold mb-4">Add New Role</h2>
             <form @submit.prevent="submit">
                 <div class="mb-4">

@@ -48,13 +48,22 @@ class SystemUserController extends Controller
 
     
 }
-    public function update(SystemUserRequest $request, User $user)
-    {
-        $user->update($request->only('name', 'email', 'phone'));
-        $user->syncRoles([$request->role_id]);
+    public function update(Request $request, User $user)
+{
+    $validated = $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|email|unique:users,email,' . $user->id,
+        'phone' => 'nullable|string|max:20',
+        'role_id' => 'required|exists:roles,id',
+    ]);
 
-        return redirect()->back()->with('success', 'System user updated');
-    }
+    $user->update($validated);
+
+    // Optional: re-assign role
+    $user->roles()->sync([$request->role_id]);
+
+    return redirect()->back();
+}
 
     public function destroy(User $user)
     {

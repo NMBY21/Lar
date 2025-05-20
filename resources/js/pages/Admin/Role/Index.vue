@@ -41,13 +41,7 @@
                             <button @click="openEditModal(role)" class="text-blue-600 hover:underline text-sm">
                                 Edit
                             </button>
-                            <button @click="() => {
-                                    if (confirm('Are you sure?')) {
-                                        router.delete(route('admin.roles.destroy', role.id))
-                                    }
-                                    }" class="text-red-600 hover:underline text-sm">
-                                Delete
-                            </button>
+                            <button class='text-red-600'@click="deleteRole(role.id)">Delete</button>
                         </td>
                     </tr>
                 </tbody>
