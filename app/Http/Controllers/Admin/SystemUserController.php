@@ -40,11 +40,14 @@ class SystemUserController extends Controller
             'password' => bcrypt($request->password),
         ]);
 
-        $user->syncRoles([$request->role_id]);
+        // $user->syncRoles([$request->role_id]);
+        $role = Role::findOrFail($request->role_id);
+        $user->assignRole($role);
 
         return redirect()->back()->with('success', 'System user created');
-    }
 
+    
+}
     public function update(SystemUserRequest $request, User $user)
     {
         $user->update($request->only('name', 'email', 'phone'));
