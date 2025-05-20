@@ -2,28 +2,26 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
 
-class DatabaseSeeder extends Seeder
+class PermissionSeeder extends Seeder
 {
     public function run(): void
     {
-        $resources = [
+        $permissions = [
             'order', 'payment collection', 'commission', 'expense',
             'vehicles', 'driver', 'location', 'load type', 'bank',
             'staffuser', 'role', 'give permission', 'report',
-            'expense type', 'client',
+            'expense type', 'client'
         ];
 
         $actions = ['show', 'add', 'delete'];
 
-        foreach ($resources as $resource) {
+        foreach ($permissions as $permission) {
             foreach ($actions as $action) {
                 Permission::firstOrCreate([
-                    'name' => "{$action} {$resource}"
+                    'name' => "{$action} {$permission}"
                 ]);
             }
         }

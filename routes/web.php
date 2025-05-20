@@ -3,6 +3,11 @@
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\Admin\ClientController;
+use App\Http\Controllers\Admin\SystemUserController;
+use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\PermissionController;
+
 
 
 Route::get('/', function () {
@@ -18,16 +23,39 @@ Route::post('/logout', function () {
     return redirect('/');
 });
 
-// products
-Route::middleware(['auth'])->group(function () {
-    Route::get('/admin/products', [ProductController::class, 'index'])->name('products.index');
-    Route::get('/admin/products/create', [ProductController::class, 'create'])->name('products.create');
-    Route::get('/admin/products/{product}', [ProductController::class, 'show'])->name('products.show');
-    Route::get('/admin/products/{product}/edit', [ProductController::class, 'edit'])->name('products.edit');
-    Route::post('/admin/products', [ProductController::class, 'store'])->name('products.store');
-    Route::put('/admin/products/{product}', [ProductController::class, 'update'])->name('products.update');
-    Route::delete('/admin/products/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
+// client
+Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
+    Route::get('client', [ClientController::class, 'index'])->name('admin.client.index');
+    Route::post('client', [ClientController::class, 'store'])->name('admin.client.store');
+    Route::put('client/{client}', [ClientController::class, 'update'])->name('admin.client.update');
+    Route::delete('client/{client}', [ClientController::class, 'destroy'])->name('admin.client.destroy');
 });
+
+// system user
+Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
+    Route::get('system-users', [SystemUserController::class, 'index'])->name('admin.system-users.index');
+    Route::post('system-users', [SystemUserController::class, 'store'])->name('admin.system-users.store');
+    Route::put('system-users/{user}', [SystemUserController::class, 'update'])->name('admin.system-users.update');
+    Route::delete('system-users/{user}', [SystemUserController::class, 'destroy'])->name('admin.system-users.destroy');
+});
+
+//role and permission
+Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
+    Route::get('roles', [RoleController::class, 'index'])->name('admin.roles.index');
+    Route::post('roles', [RoleController::class, 'store'])->name('admin.roles.store');
+    Route::delete('roles/{role}', [RoleController::class, 'destroy'])->name('admin.roles.destroy');
+    Route::post('roles/{role}/permissions', [RoleController::class, 'assignPermissions'])->name('admin.roles.permissions');
+    Route::put('roles/{role}', [RoleController::class, 'update'])->name('admin.roles.update');
+    Route::delete('roles/{role}', [RoleController::class, 'destroy'])->name('admin.roles.destroy');
+
+});
+// permission
+Route::prefix('admin')->middleware(['auth'])->group(function () {
+    Route::get('/permissions', [PermissionController::class, 'index']);
+    Route::post('/roles/{role}/assign-permissions', [RoleController::class, 'assignPermissions'])
+        ->name('admin.roles.assign-permissions');
+});
+
 
 require __DIR__.'/settings.php';
 require __DIR__.'/auth.php';
