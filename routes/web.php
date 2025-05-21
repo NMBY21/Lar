@@ -67,6 +67,11 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
     Route::post('/accounts', [AccountController::class, 'store'])->name('admin.accounts.store');
     Route::delete('/accounts/{account}', [AccountController::class, 'destroy'])->name('admin.accounts.destroy');
 });
+// load type
+Route::middleware(['auth'])->prefix('admin')->group(function () {
+    Route::resource('load-types', \App\Http\Controllers\Admin\LoadTypeController::class)
+        ->only(['index', 'store', 'update', 'destroy']);
+});
 
 require __DIR__.'/settings.php';
 require __DIR__.'/auth.php';
