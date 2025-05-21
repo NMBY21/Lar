@@ -18,7 +18,7 @@
                 <NavLink href="/settings/employees" label="Employees" />
                 <NavLink href="/settings/location" label="Location" />
                 <NavLink href="/settings/load-type" label="Load Type" />
-                <NavLink href="/settings/bank" label="Bank" />
+                <NavLink href="/admin/banks" label="Bank" />
 
                 <p class="mt-4 text-sm font-semibold">User Management</p>
                 <NavLink href="/admin/client" label="Clients" />

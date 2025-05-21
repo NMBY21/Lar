@@ -7,7 +7,8 @@ use App\Http\Controllers\Admin\ClientController;
 use App\Http\Controllers\Admin\SystemUserController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\PermissionController;
-
+use App\Http\Controllers\Admin\BankController;
+use App\Http\Controllers\Admin\AccountController;
 
 
 Route::get('/', function () {
@@ -58,6 +59,14 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
         ->name('admin.roles.assign-permissions');
 });
 
+//bank
+Route::prefix('admin')->middleware(['auth'])->group(function () {
+    Route::resource('banks', BankController::class)->except(['show']);
+    Route::get('banks/{bank}', [BankController::class, 'show'])->name('admin.banks.show');
+    Route::put('/accounts/{account}', [AccountController::class, 'update'])->name('admin.accounts.update');
+    Route::post('/accounts', [AccountController::class, 'store'])->name('admin.accounts.store');
+    Route::delete('/accounts/{account}', [AccountController::class, 'destroy'])->name('admin.accounts.destroy');
+});
 
 require __DIR__.'/settings.php';
 require __DIR__.'/auth.php';
