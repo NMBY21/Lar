@@ -16,7 +16,7 @@
                 <NavLink href="/settings/expense-type" label="Expense Type" />
                 <NavLink href="/settings/vehicles" label="Vehicles" />
                 <NavLink href="/settings/employees" label="Employees" />
-                <NavLink href="/settings/location" label="Location" />
+                <NavLink href="/admin/locations" label="Location" />
                 <NavLink href="/admin/load-types" label="Load Type" />
                 <NavLink href="/admin/banks" label="Bank" />
 

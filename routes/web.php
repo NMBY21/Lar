@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\BankController;
 use App\Http\Controllers\Admin\AccountController;
+use App\Http\Controllers\Admin\LocationController;
 
 
 Route::get('/', function () {
@@ -71,6 +72,11 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
 Route::middleware(['auth'])->prefix('admin')->group(function () {
     Route::resource('load-types', \App\Http\Controllers\Admin\LoadTypeController::class)
         ->only(['index', 'store', 'update', 'destroy']);
+});
+
+//Location
+Route::middleware('auth')->prefix('admin')->group(function () {
+    Route::resource('locations', LocationController::class)->except(['create', 'edit', 'show']);
 });
 
 require __DIR__.'/settings.php';

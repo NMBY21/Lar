@@ -1,5 +1,5 @@
 <template>
-  <div v-if="show" class="fixed inset-0 z-50 bg-black bg-opacity-30 flex items-center justify-center">
+  <div v-if="show" class="fixed inset-0 z-50 bg- bg-opacity-30 flex items-center justify-center">
         <div class="bg-white rounded shadow p-6 w-full max-w-md">
       <h2 class="text-lg font-semibold mb-4">{{ loadType ? 'Edit' : 'Add' }} Load Type</h2>
       <form @submit.prevent="submit">
