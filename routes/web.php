@@ -10,7 +10,7 @@ use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\BankController;
 use App\Http\Controllers\Admin\AccountController;
 use App\Http\Controllers\Admin\LocationController;
-
+use App\Http\Controllers\Admin\EmployeeController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome');
@@ -78,6 +78,14 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
 Route::middleware('auth')->prefix('admin')->group(function () {
     Route::resource('locations', LocationController::class)->except(['create', 'edit', 'show']);
 });
+
+//Employee
+Route::middleware('auth')->prefix('admin')->group(function () {
+    Route::resource('employees', \App\Http\Controllers\Admin\EmployeeController::class)
+        ->except(['create', 'edit', 'show']);
+    Route::put('admin/employees/{employee}', [EmployeeController::class, 'update']);
+});
+
 
 require __DIR__.'/settings.php';
 require __DIR__.'/auth.php';

@@ -15,7 +15,7 @@
                 <p class="mt-4 text-sm font-semibold">Setting</p>
                 <NavLink href="/settings/expense-type" label="Expense Type" />
                 <NavLink href="/settings/vehicles" label="Vehicles" />
-                <NavLink href="/settings/employees" label="Employees" />
+                <NavLink href="/admin/employees" label="Employees" />
                 <NavLink href="/admin/locations" label="Location" />
                 <NavLink href="/admin/load-types" label="Load Type" />
                 <NavLink href="/admin/banks" label="Bank" />
