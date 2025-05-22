@@ -13,7 +13,7 @@
                 <NavLink href="/report" label="Report" />
 
                 <p class="mt-4 text-sm font-semibold">Setting</p>
-                <NavLink href="/settings/expense-type" label="Expense Type" />
+                <NavLink href="/admin/expense-types" label="Expense Type" />
                 <NavLink href="/settings/vehicles" label="Vehicles" />
                 <NavLink href="/admin/employees" label="Employees" />
                 <NavLink href="/admin/locations" label="Location" />

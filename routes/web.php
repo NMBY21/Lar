@@ -11,6 +11,9 @@ use App\Http\Controllers\Admin\BankController;
 use App\Http\Controllers\Admin\AccountController;
 use App\Http\Controllers\Admin\LocationController;
 use App\Http\Controllers\Admin\EmployeeController;
+use App\Http\Controllers\Admin\ExpenseTypeController;
+
+
 
 Route::get('/', function () {
     return Inertia::render('Welcome');
@@ -84,6 +87,11 @@ Route::middleware('auth')->prefix('admin')->group(function () {
     Route::resource('employees', \App\Http\Controllers\Admin\EmployeeController::class)
         ->except(['create', 'edit', 'show']);
     Route::put('admin/employees/{employee}', [EmployeeController::class, 'update']);
+});
+
+// Expense type
+Route::middleware(['auth'])->prefix('admin')->group(function () {
+    Route::resource('expense-types', \App\Http\Controllers\Admin\ExpenseTypeController::class)->except(['create', 'edit', 'show']);
 });
 
 
