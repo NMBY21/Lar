@@ -7,7 +7,7 @@
 
                 <p class="mt-4 text-sm font-semibold">Orders</p>
                 <NavLink href="/orders" label="Orders" />
-                <NavLink href="/expenses" label="Expense" />
+                <NavLink href="/admin/expenses" label="Expense" />
 
                 <p class="mt-4 text-sm font-semibold">Report</p>
                 <NavLink href="/report" label="Report" />

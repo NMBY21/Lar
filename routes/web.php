@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\AccountController;
 use App\Http\Controllers\Admin\LocationController;
 use App\Http\Controllers\Admin\EmployeeController;
 use App\Http\Controllers\Admin\ExpenseTypeController;
+use App\Http\Controllers\Admin\ExpenseController;
 
 
 
@@ -92,6 +93,19 @@ Route::middleware('auth')->prefix('admin')->group(function () {
 // Expense type
 Route::middleware(['auth'])->prefix('admin')->group(function () {
     Route::resource('expense-types', \App\Http\Controllers\Admin\ExpenseTypeController::class)->except(['create', 'edit', 'show']);
+});
+
+//Expenses
+Route::middleware(['auth'])->prefix('admin')->group(function () {
+    Route::resource('expenses', \App\Http\Controllers\Admin\ExpenseController::class);
+    Route::get('/api/expense-dependencies', function () {
+        return response()->json([
+            'banks' => \App\Models\Bank::all(),
+            'accounts' => \App\Models\Account::all(),
+            'expense_types' => \App\Models\ExpenseType::all(),
+            
+        ]);
+    });
 });
 
 
