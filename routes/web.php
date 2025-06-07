@@ -66,8 +66,9 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
 
 //bank
 Route::prefix('admin')->middleware(['auth'])->group(function () {
-    Route::resource('banks', BankController::class)->except(['show']);
-    Route::get('banks/{bank}', [BankController::class, 'show'])->name('admin.banks.show');
+    Route::resource('banks', BankController::class)
+        ->except(['show'])
+        ->names('admin.banks');    Route::get('banks/{bank}', [BankController::class, 'show'])->name('admin.banks.show');
     Route::put('/accounts/{account}', [AccountController::class, 'update'])->name('admin.accounts.update');
     Route::post('/accounts', [AccountController::class, 'store'])->name('admin.accounts.store');
     Route::delete('/accounts/{account}', [AccountController::class, 'destroy'])->name('admin.accounts.destroy');
