@@ -156,7 +156,7 @@ const filteredFromAccounts = ref([]);
 const filteredToAccounts = ref([]);
 
 const uniqueCategories = computed(() => {
-  const categories = props.expenseTypes.map(type => type.category);
+  const categories = props.expenseTypes.map(type => type.categories);
   return [...new Set(categories.filter(Boolean))];
 });
 
@@ -191,15 +191,29 @@ const submit = () => {
   });
 };
 
+// watch(
+//   () => props.expense,
+//   (newVal) => {
+//     if (newVal) {
+//       selectedCategory.value = props.expense.expense_type?.category || '';
+//       filterFromAccounts();
+//       filterToAccounts();
+//     }
+//   },
+//   { immediate: true }
+// );
 watch(
   () => props.expense,
   (newVal) => {
     if (newVal) {
-      selectedCategory.value = props.expense.expense_type?.category || '';
+      const selectedType = props.expenseTypes.find(t => t.id === newVal.expense_type_id);
+      selectedCategory.value = selectedType?.category || '';
+      form.expense_type_id = newVal.expense_type_id;
       filterFromAccounts();
       filterToAccounts();
     }
   },
   { immediate: true }
 );
+
 </script>

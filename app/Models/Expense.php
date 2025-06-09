@@ -8,7 +8,7 @@ class Expense extends Model
 {
     protected $fillable = [
         'expense_type_id', 'amount', 'date', 'from_bank_id',
-        'from_account_id', 'to_bank_id', 'to_account',
+        'from_account_id', 'to_bank_id', 'to_account_id',
         'payment_type', 'file_path', 'remark'
     ];
 
@@ -27,5 +27,8 @@ class Expense extends Model
     public function toBank() {
         return $this->belongsTo(Bank::class, 'to_bank_id');
     }
-    
+
+    public function toAccount() {
+        return $this->belongsTo(Account::class, 'to_account_id');
+    }
 }

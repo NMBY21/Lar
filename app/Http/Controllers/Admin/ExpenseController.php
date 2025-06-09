@@ -28,7 +28,9 @@ class ExpenseController extends Controller
         return Inertia::render('Expenses/Index', [
             'expenses' => $query->latest()->paginate(10),
             'filters' => $request->only('search', 'from', 'to'),
-            'expenseTypes' => \App\Models\ExpenseType::all(),
+            // 'expenseTypes' => \App\Models\ExpenseType::all(),
+            'expenseTypes' => \App\Models\ExpenseType::select('id', 'name', 'categories')->get(),
+            'categories' => ['general', 'vehicle', 'employee'],
             'banks' => \App\Models\Bank::all(),
             'accounts' => \App\Models\Account::all(),
             
