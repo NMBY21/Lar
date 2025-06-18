@@ -33,7 +33,7 @@ class ExpenseController extends Controller
             'categories' => ['general', 'vehicle', 'employee'],
             'banks' => \App\Models\Bank::all(),
             'accounts' => \App\Models\Account::all(),
-            
+
         ]);
 
     }
@@ -48,7 +48,7 @@ class ExpenseController extends Controller
             'from_account_id' => 'nullable|exists:accounts,id',
             'to_bank_id' => 'nullable|exists:banks,id',
             'to_account' => 'nullable|string',
-            'payment_type' => 'required|in:cash,transfer,check',
+            'payment_type' => 'required|in:Cash,Cheque,Transfer',
             'file' => 'nullable|file|mimes:pdf,jpg,png,doc,docx',
             'remark' => 'nullable|string',
         ]);
@@ -61,4 +61,16 @@ class ExpenseController extends Controller
 
         return redirect()->back()->with('success', 'Expense added successfully!');
     }
+    public function filterByCategory(Request $request)
+{
+    $category = $request->query('category');
+
+    // Since `category` is stored as JSON or comma-separated values,
+    // we assume it's stored as JSON array (['vehicle', 'employee'] etc)
+    $expenseTypes = ExpenseType::whereJsonContains('categories', $category)
+        ->select('id', 'name')
+        ->get();
+
+    return response()->json($expenseTypes);
+}
 }

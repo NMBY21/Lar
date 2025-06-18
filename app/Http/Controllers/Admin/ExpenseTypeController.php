@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\ExpenseType;
 use Inertia\Inertia;
 
+
 class ExpenseTypeController extends Controller
 {
     public function index(Request $request)
@@ -51,6 +52,16 @@ public function update(Request $request, ExpenseType $expenseType)
 public function destroy(ExpenseType $expenseType)
 {
     $expenseType->delete();
+}
+
+public function getByCategory($category)
+{
+    // Make sure `categories` is cast as array in the model
+    $expenseTypes = ExpenseType::whereJsonContains('categories', $category)
+        ->select('id', 'name')
+        ->get();
+
+    return response()->json($expenseTypes);
 }
 
 }

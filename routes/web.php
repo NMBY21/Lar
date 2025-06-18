@@ -94,6 +94,17 @@ Route::middleware('auth')->prefix('admin')->group(function () {
 // Expense type
 Route::middleware(['auth'])->prefix('admin')->group(function () {
     Route::resource('expense-types', \App\Http\Controllers\Admin\ExpenseTypeController::class)->except(['create', 'edit', 'show']);
+    Route::get('/expense-types/filter', function (Request $request) {
+        $category = $request->query('category');
+
+        $types = \App\Models\ExpenseType::where('category', $category)
+            ->select('id', 'name')
+            ->orderBy('name')
+            ->get();
+
+        return response()->json($types);
+    })->name('expense-types.filter');
+    Route::get('/expense-types/by-category/{category}', [ExpenseTypeController::class, 'getByCategory']);
 });
 
 //Expenses
@@ -104,9 +115,9 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
             'banks' => \App\Models\Bank::all(),
             'accounts' => \App\Models\Account::all(),
             'expense_types' => \App\Models\ExpenseType::all(),
-            
         ]);
     });
+    Route::get('/expense-types/by-category/{category}', [ExpenseTypeController::class, 'getByCategory']);
 });
 
 
