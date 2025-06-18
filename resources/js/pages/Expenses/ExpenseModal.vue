@@ -70,28 +70,12 @@
                         }}</div>
                 </div>
 
-                <!-- To Bank -->
-                <div class="mb-4">
-                    <label class="block mb-1 text-sm">To Bank</label>
-                    <select v-model="form.to_bank_id" @change="filterToAccounts"
-                        class="w-full border px-3 py-2 rounded">
-                        <option value="" disabled>Select Bank</option>
-                        <option v-for="bank in banks" :key="bank.id" :value="bank.id">{{ bank.name }}</option>
-                    </select>
-                    <div v-if="form.errors.to_bank_id" class="text-red-500 text-sm">{{ form.errors.to_bank_id }}</div>
-                </div>
-
-                <!-- To Account -->
+                <!-- To Account (Manual Input) -->
                 <div class="mb-4">
                     <label class="block mb-1 text-sm">To Account</label>
-                    <select v-model="form.to_account_id" class="w-full border px-3 py-2 rounded">
-                        <option value="" disabled>Select Account</option>
-                        <option v-for="account in filteredToAccounts" :key="account.id" :value="account.id">
-                            {{ account.account_number }}
-                        </option>
-                    </select>
-                    <div v-if="form.errors.to_account_id" class="text-red-500 text-sm">{{ form.errors.to_account_id }}
-                    </div>
+                    <input v-model="form.to_account" type="text" class="w-full border px-3 py-2 rounded"
+                        placeholder="Enter destination account" :class="{ 'border-red-500': form.errors.to_account }" />
+                    <div v-if="form.errors.to_account" class="text-red-500 text-sm">{{ form.errors.to_account }}</div>
                 </div>
 
                 <!-- Payment Type -->
@@ -153,7 +137,7 @@ const form = useForm({
     from_bank_id: props.expense?.from_bank_id || '',
     from_account_id: props.expense?.from_account_id || '',
     to_bank_id: props.expense?.to_bank_id || '',
-    to_account_id: props.expense?.to_account_id || '',
+    to_account: props.expense?.to_account || '',
     payment_type: props.expense?.payment_type || 'Cash',
     remark: props.expense?.remark || '',
     file: null,

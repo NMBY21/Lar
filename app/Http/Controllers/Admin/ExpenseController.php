@@ -47,7 +47,7 @@ class ExpenseController extends Controller
             'from_bank_id' => 'nullable|exists:banks,id',
             'from_account_id' => 'nullable|exists:accounts,id',
             'to_bank_id' => 'nullable|exists:banks,id',
-            'to_account' => 'nullable|string',
+            'to_account' => 'nullable|string|max:255',
             'payment_type' => 'required|in:Cash,Cheque,Transfer',
             'file' => 'nullable|file|mimes:pdf,jpg,png,doc,docx',
             'remark' => 'nullable|string',
