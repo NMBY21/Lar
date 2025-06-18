@@ -12,8 +12,14 @@ class ExpenseController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Expense::with('expenseType', 'fromBank', 'fromAccount', 'toBank');
-
+        // $query = Expense::with('expenseType', 'fromBank', 'fromAccount', 'toBank');
+        $query = Expense::with([
+            'expenseType:id,name,categories',
+            'fromBank:id,name',
+            'fromAccount:id,account',
+            'toBank:id,name',
+            // 'toAccount:id,account',
+        ]);
 
         if ($request->search) {
             $query->whereHas('expenseType', fn($q) =>

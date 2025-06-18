@@ -66,14 +66,19 @@
             class="border-t"
           >
             <td class="p-2">{{ index + 1 }}</td>
-            <td class="p-2">{{ expense.expense_type?.category }}</td>
+            <!-- <td class="p-2">{{ expense.expense_type?.categories }}</td> -->
+             <td>
+                <span v-for="cat in expense.expense_type?.categories" :key="cat" class="mr-1">
+                    {{ cat }}
+                </span>
+            </td>
             <td class="p-2">{{ expense.expense_type?.name }}</td>
             <td class="p-2">{{ expense.amount }}</td>
             <td class="p-2">{{ expense.date }}</td>
             <td class="p-2">{{ expense.from_bank?.name }}</td>
-            <td class="p-2">{{ expense.from_account?.account_number }}</td>
+            <td class="p-2">{{ expense.from_account?.account }}</td>
             <td class="p-2">{{ expense.to_bank?.name }}</td>
-            <td class="p-2">{{ expense.to_account }}</td>
+            <td class="p-2">{{ expense.to_account}}</td>
             <td class="p-2">{{ expense.payment_type }}</td>
             <td class="p-2">
               <a
